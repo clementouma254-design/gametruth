@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1120">
+<title>GameTruth</title>
+<style>
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  background: #0b1120;
+  color: #e5edf8;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+header {
+  padding: 24px 20px;
+  border-bottom: 1px solid #263449;
+}
+h1 { margin: 0; font-size: 28px; }
+header p, .muted { color: #9aaac0; }
+main { max-width: 720px; margin: auto; padding: 20px; }
+.card {
+  background: #131e30;
+  border: 1px solid #293950;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+h2 { font-size: 18px; margin-top: 0; }
+button, select {
+  width: 100%;
+  padding: 13px;
+  border-radius: 10px;
+  border: 1px solid #40516a;
+  background: #1b2b42;
+  color: white;
+  font-size: 16px;
+}
+button { cursor: pointer; background: #60a5fa; color: #071426;
+  font-weight: 700; border: 0; }
+button:focus, select:focus { outline: 2px solid #93c5fd; }
+.result { line-height: 1.6; }
+.tag { color: #93c5fd; font-weight: 700; }
+footer { text-align: center; padding: 20px; color: #9aaac0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>GameTruth</h1>
+  <p>Investigate the systems behind your games.</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Game investigation</h2>
+    <p class="muted">Choose what you want to investigate.</p>
+    <select id="topic">
+      <option value="ads">Advertising and monetization</option>
+      <option value="tracking">Tracking and privacy</option>
+      <option value="difficulty">Difficulty and game fairness</option>
+    </select>
+    <p></p>
+    <button id="scan">Start investigation</button>
+  </section>
+
+  <section class="card" id="report" aria-live="polite">
+    <h2>Investigation report</h2>
+    <p class="muted">Your report will appear here.</p>
+  </section>
+
+  <section class="card">
+    <h2>Evidence standards</h2>
+    <p>GameTruth separates confirmed observations from potential concerns.</p>
+    <p class="muted">An advertising SDK alone does not prove that a game manipulates its players.</p>
+  </section>
+</main>
+
+<footer>GameTruth · Free investigation tools</footer>
+
+<script>
+const reports = {
+  ads: {
+    title: "Advertising and monetization",
+    text: "Look for advertising SDKs, rewarded-ad callbacks, ad-related configuration and documented ad triggers. Their presence does not prove forced advertising or manipulated gameplay."
+  },
+  tracking: {
+    title: "Tracking and privacy",
+    text: "Review requested permissions, identifiable analytics SDKs and network destinations. A permission or endpoint alone does not prove personal data was collected or misused."
+  },
+  difficulty: {
+    title: "Difficulty and game fairness",
+    text: "Investigate downloadable game rules, piece-generation algorithms and repeatable gameplay patterns. Random losses alone are not evidence of deliberate manipulation."
+  }
+};
+
+document.getElementById("scan").addEventListener("click", () => {
+  const report = reports[document.getElementById("topic").value];
+  document.getElementById("report").innerHTML =
+    "<h2>" + report.title + "</h2>" +
+    "<p class='tag'>PRELIMINARY GUIDANCE — NOT AN APK SCAN</p>" +
+    "<p class='result'>" + report.text + "</p>" +
+    "<p class='muted'>No game has been scanned. Technical evidence is required for a finding.</p>";
+});
+</script>
+</body>
+</html>
